@@ -1,0 +1,23 @@
+{
+  "name": "audio-visualizer",
+  "main": "index.js",
+  "version": "1.0.0",
+  "authors": [
+    "Nick Ferraro <the.nick.ferraro@gmail.com>"
+  ],
+  "description": "A simple example of HTML5 web audio APIs with some fun visualizations",
+  "license": "CC-BY-SA-4.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "snap.svg": "~0.4.1",
+    "babel": "*",
+    "react": "~15.0.1"
+  }
+}

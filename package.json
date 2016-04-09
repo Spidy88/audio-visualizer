@@ -1,0 +1,27 @@
+{
+  "name": "audio-visualizer",
+  "version": "1.0.0",
+  "description": "A simple example of HTML5 web audio APIs with some fun visualizations",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch static/*.* --watch static/css/* --watch static/js/*",
+    "test": "mocha --recursive --harmony"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spidy88/audio-visualizer.git"
+  },
+  "keywords": [
+    "html5",
+    "web-audio"
+  ],
+  "author": "Nick Ferraro <the.nick.ferraro@gmail.com>",
+  "license": "CC-BY-SA-4.0",
+  "bugs": {
+    "url": "https://github.com/Spidy88/audio-visualizer/issues"
+  },
+  "homepage": "https://github.com/Spidy88/audio-visualizer#readme",
+  "dependencies": {
+    "express": "4.13.4"
+  }
+}
