@@ -9,15 +9,34 @@
     <body class="container">
         <h1>Audio Visualizer</h1>
         <h4>Brought to you by Spidy</h4>
-        <!-- PUT VISUALIZER HERE -->
+        <hr />
 
         <p id="media-error" class="text-error hide"></p>
 
+        <div>
+            <label for="volume">Volume</label>
+            <input id="volume" type="range" min="0" max="100"/>
+        </div>
+
+        <div class="form-control">
+            <label for="input">Input Device</label>
+            <select id="input">
+                <option value="mic" selected="true">Microphone</option>
+                <option value="mp3">MP3</option>
+            </select>
+        </div>
+
         <svg id="visualizer"></svg>
         <div id="fps" class="fps"></div>
+        <audio id="mp3" controls>
+            <source src="media/Allegro.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
     </body>
 
     <script src="babel/browser.js"></script>
+    <script src="react/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
     <script src="jquery/dist/jquery.js"></script>
     <script src="snap.svg/dist/snap.svg.js"></script>
     <script src="js/visualizer.js"></script>

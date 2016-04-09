@@ -1,17 +1,55 @@
 var FFT_SIZE = 256;
 var MAX_FREQ_RANGE = 255;
-var MAX_AMP_RANGE = 25;
+var MAX_AMP_RANGE = 50;
 
 var visualizer = Snap('#visualizer');
 var circleRefs = [];
 
 var context = new AudioContext();
 var micInput;
+var mp3Input;
 var volumeNode;
 var analyzerNode;
 var freqByteData;
+var currentInputNode;
 
 initAudio();
+
+function initControls() {
+    var $volume = $('#volume');
+    var $input = $('#input');
+
+    $volume.on('change', function() {
+        volumeNode.gain.value = $volume.val() / 100;
+    });
+
+    $input.on('change', function() {
+        console.log('Change fired');
+        var inputType = $input.val();
+
+        if( currentInputNode ) {
+            currentInputNode.disconnect();
+            analyzerNode.disconnect();
+            currentInputNode = null;
+        }
+
+        if( inputType === 'mic' ) {
+            // Connect mic input to gain node
+            currentInputNode = micInput;
+        }
+        else if( inputType === 'mp3' ) {
+            // Connect mp3 input to gain node
+            currentInputNode = mp3Input;
+            analyzerNode.connect(context.destination);
+        }
+        else {
+            alert('Input type not yet supported');
+            return;
+        }
+
+        currentInputNode.connect(volumeNode);
+    });
+}
 
 function initSVG() {
     visualizer.attr({
@@ -62,17 +100,20 @@ function initAudio() {
     };
     var onMediaSuccess = function(stream) {
         micInput = context.createMediaStreamSource(stream);
+        mp3Input = context.createMediaElementSource(document.querySelector('#mp3'));
         volumeNode = context.createGain();
         analyzerNode = context.createAnalyser();
 
         analyzerNode.fftSize = FFT_SIZE;
 
+        currentInputNode = micInput;
         micInput.connect(volumeNode);
         volumeNode.connect(analyzerNode);
 
         freqByteData = new Uint8Array(analyzerNode.frequencyBinCount);
         freqByteData.fill(0);
         initSVG();
+        initControls();
 
         updateVisualizer();
     };

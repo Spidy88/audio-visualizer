@@ -8,6 +8,9 @@ var FPS = React.createClass({
     },
 
     componentDidMount: function() {
+        this.state.lastRenderTime = Date.now();
+        this.state.isMounted = true;
+
         this.setState({
             lastRenderTime: Date.now(),
             isMounted: true
@@ -24,25 +27,26 @@ var FPS = React.createClass({
 
     updateFPS: function() {
         var currentRenderTime = Date.now();
-        var deltaRenderTime = currentRenderTime - this.state.lastRenderTime;
+        var deltaRenderTime = (currentRenderTime - this.state.lastRenderTime) / 1000;
 
         // We'll assumed deltaRenderTime is never 0
-        var fps = 1.0 / deltaRenderTime;
+        var fps = Math.floor(1.0 / deltaRenderTime);
 
         this.setState({
+            lastRenderTime: currentRenderTime,
             fps: fps
         });
 
-        if( !this.state.isMounted ) {
-            requestAnimationFrame( this.updateFPS.bind( this ) );
+        if( this.state.isMounted ) {
+            requestAnimationFrame( this.updateFPS );
         }
     },
 
     render: function() {
         return (
-            <div className="fps">{{ this.fps }} FPS</div>
+            <div className="fps">{ this.state.fps } FPS</div>
         );
     }
 });
 
-React.render(<FPS />, $('#fps'));
+ReactDOM.render(<FPS />, document.querySelector('#fps'));
